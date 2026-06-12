@@ -2,25 +2,14 @@ WITH TRIPS AS (
 
 select
 	RIDE_ID,
-	RIDEABLE_TYPE,
 	DATE(TO_TIMESTAMP(STARTED_AT)) AS TRIP_DATE,
-	-- ENDED_AT,
-	-- START_STATION_NAME,
 	START_STATIO_ID                AS START_STATION_ID,
     TIMESTAMPDIFF(SECOND,TO_TIMESTAMP(STARTED_AT), TO_TIMESTAMP(ENDED_AT)) AS TRIP_DURATION_SECONDS,
-	-- END_STATION_NAME,
-	-- END_STATION_ID,
-	-- START_LAT,
-	-- START_LNG,
-	-- END_LAT,
-	-- END_LNG,
 	MEMBER_CSUAL                    AS MEMBER_CASUAL
-from {{ source('demo', 'bike') }}
-where RIDE_ID != 'ride_id'
+
+from {{ ref('stg_bike') }}
 
 )
-
-
 
 
 select
